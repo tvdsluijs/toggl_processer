@@ -3,9 +3,10 @@ logging/*
 .idea/
 .idea/*
 config/*
-images/*s
 !config/config_sample.yml
-!config/client_service_secret_sample.json
+excel/*
+!excel/urenoverzicht.xlsx
+images/*s
 data/*
 logging/*
 mail-attachments/

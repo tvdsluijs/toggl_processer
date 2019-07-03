@@ -1,2 +1,5 @@
-TogglPy
+TogglPy==0.1.1
 PyYAML
+xlrd
+xlwt
+xlutils
