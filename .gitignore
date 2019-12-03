@@ -5,6 +5,7 @@ logging/*
 config/*
 !config/config_sample.yml
 excel/*
+output/*
 !excel/urenoverzicht.xlsx
 images/*s
 data/*

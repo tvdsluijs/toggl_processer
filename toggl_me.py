@@ -124,7 +124,11 @@ class TogglMe:
 
     @staticmethod
     def convert_timedate(date_time_str=None):
-        date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S+02:00')
+        try:
+            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S+02:00')
+        except Exception:
+            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S+01:00')
+
         return date_time_obj, date_time_obj.strftime("%Y-%m-%d")
 
     @staticmethod
