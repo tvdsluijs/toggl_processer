@@ -20,3 +20,7 @@ functions/__pycache__/*
 word_output/*
 venv/
 venv/*
+.venv/
+.venv/*
+.vscode/
+.vscode/*

@@ -1,4 +1,4 @@
-#https://pypi.org/project/TogglPy/
+# https://pypi.org/project/TogglPy/
 import time
 from datetime import datetime, date, timedelta
 import json
@@ -21,21 +21,22 @@ class TogglMe:
         self.start_col = start_col
         self.start_row = start_row
 
-        self.months = ["Unknown",
-                  "January",
-                  "Febuary",
-                  "March",
-                  "April",
-                  "May",
-                  "June",
-                  "July",
-                  "August",
-                  "September",
-                  "October",
-                  "November",
-                  "December"]
-
+        self.normal_hours_day = 8
         self.normal_work_hours = 7
+
+        self.months = ["Unknown",
+                       "January",
+                       "Febuary",
+                       "March",
+                       "April",
+                       "May",
+                       "June",
+                       "July",
+                       "August",
+                       "September",
+                       "October",
+                       "November",
+                       "December"]
 
         self.user_agent = user_agent
         self.user_name = name
@@ -47,7 +48,7 @@ class TogglMe:
         self.filename = None
 
         self.my_excel_data = []
-        self.excel_template = "excel/urenoverzicht.xlsx"
+        self.excel_template = "excel/urenoverzicht-2020.xlsx"
         self.excel_file = None
 
         self.about_last_month()
@@ -87,7 +88,8 @@ class TogglMe:
             'since': self.last_month_first,
             'until': self.last_month_last
         }
-        self.response = toggl.request("https://toggl.com/reports/api/v2/details", parameters=data)
+        self.response = toggl.request(
+            "https://toggl.com/reports/api/v2/details", parameters=data)
         self.save_raw_data()
 
     def parse_data(self):
@@ -114,8 +116,8 @@ class TogglMe:
 
         ws = wb.active
 
-        ws.cell(row=1, column=2, value=self.user_name) # name field in excel
-        ws.cell(row=1, column=5, value=self.curr_year) # year field in excel
+        ws.cell(row=1, column=2, value=self.user_name)  # name field in excel
+        ws.cell(row=1, column=5, value=self.curr_year)  # year field in excel
 
         for data in self.my_excel_data:
             ws.cell(row=data[1], column=data[0], value=data[2])
@@ -125,9 +127,11 @@ class TogglMe:
     @staticmethod
     def convert_timedate(date_time_str=None):
         try:
-            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S+02:00')
+            date_time_obj = datetime.strptime(
+                date_time_str, '%Y-%m-%dT%H:%M:%S+02:00')
         except Exception:
-            date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S+01:00')
+            date_time_obj = datetime.strptime(
+                date_time_str, '%Y-%m-%dT%H:%M:%S+01:00')
 
         return date_time_obj, date_time_obj.strftime("%Y-%m-%d")
 
@@ -144,6 +148,11 @@ class TogglMe:
     def minus_normal_hours(self, hours=0):
         if hours > self.normal_work_hours:
             return hours-self.normal_work_hours
+        elif hours == self.normal_work_hours:
+            return 0
+        elif 0 < hours < self.normal_work_hours:
+            return self.normal_work_hours-hours
+
         return hours
 
     @staticmethod
@@ -200,6 +209,3 @@ if __name__ == '__main__':
 
 # print(toggl.getWorkspaces())
 # print(toggl.getClients())
-
-
-
